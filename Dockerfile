@@ -34,7 +34,7 @@ RUN sed -i 's/^;\?\(max_execution_time =\).*$/\1 300/' /etc/php5/apache2/php.ini
   sed -i 's/^;\?\(post_max_size =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
   sed -i 's/^;\?\(upload_max_filesize =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
   sed -i 's/^;\?\(output_buffering =\).*$/\1 Off/' /etc/php5/apache2/php.ini && \
-  sed -i 's/^;\?\(default_charset =\).*$/\1 "UTF-8"/' /etc/php5/apache2/php.ini && \
+  sed -i 's/^;\?\(default_charset =\).*$/\1 "UTF-8"/' /etc/php5/apache2/php.ini
 RUN php5enmod mcrypt
 
 RUN a2enmod ssl
