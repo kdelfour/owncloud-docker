@@ -41,9 +41,9 @@ RUN php5enmod mcrypt
 RUN a2enmod ssl
 RUN a2ensite default-ssl
 
-ADD ./001-owncloud.conf /etc/apache2/sites-available/
+ADD conf/owncloud /etc/apache2/sites-available/
 RUN rm -f /etc/apache2/sites-enabled/000*
-RUN ln -s /etc/apache2/sites-available/001-owncloud.conf /etc/apache2/sites-enabled/
+RUN ln -s /etc/apache2/sites-available/owncloud /etc/apache2/sites-enabled/
 
 # ------------------------------------------------------------------------------
 # Clean up APT when done.
