@@ -29,12 +29,13 @@ RUN mkdir /var/www/owncloud/data
 
 # ------------------------------------------------------------------------------
 # Make some changes
-RUN sed -i -e 's/^;\?\(max_execution_time =\).*$/\1 300/' /etc/php5/fpm/php.ini
+RUN sed -i -e "s/max_execution_time\s*=\s*$/max_execution_time = 300/g" /etc/php5/fpm/php.ini
 RUN sed -i -e "s/output_buffering\s*=\s*4096/output_buffering = Off/g" /etc/php5/fpm/php.ini
 RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini
 RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 4G/g" /etc/php5/fpm/php.ini
 RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 4G/g" /etc/php5/fpm/php.ini
-RUN sed -i -e 's/^;\?\(default_charset =\).*$/\1 "UTF-8"/' /etc/php5/fpm/php.ini
+RUN sed -i -e "s/default_charset\s*=\s*$/default_charset = UTF-8/g" /etc/php5/fpm/php.ini
+
 RUN php5enmod mcrypt
 
 RUN a2enmod ssl
