@@ -29,10 +29,12 @@ RUN mkdir /var/www/owncloud/data
 
 # ------------------------------------------------------------------------------
 # Make some changes
-RUN sed -i -e "s/output_buffering\s*=\s*4096/output_buffering = Off/g" /etc/php5/fpm/php.ini
-RUN sed -i -e "s/;cgi.fix_pathinfo=1/cgi.fix_pathinfo=0/g" /etc/php5/fpm/php.ini
-RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 4G/g" /etc/php5/fpm/php.ini
-RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 4G/g" /etc/php5/fpm/php.ini
+RUN sed -i 's/^;\?\(max_execution_time =\).*$/\1 300/' /etc/php5/apache2/php.ini && \
+  sed -i 's/^;\?\(memory_limit =\).*$/\1 256M/' /etc/php5/apache2/php.ini && \
+  sed -i 's/^;\?\(post_max_size =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
+  sed -i 's/^;\?\(upload_max_filesize =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
+  sed -i 's/^;\?\(output_buffering =\).*$/\1 Off/' /etc/php5/apache2/php.ini && \
+  sed -i 's/^;\?\(default_charset =\).*$/\1 "UTF-8"/' /etc/php5/apache2/php.ini && \
 RUN php5enmod mcrypt
 
 RUN a2enmod ssl
