@@ -29,20 +29,16 @@ RUN mkdir /var/www/owncloud/data
 
 # ------------------------------------------------------------------------------
 # Make some changes
-RUN sed -i 's/^;\?\(max_execution_time =\).*$/\1 300/' /etc/php5/apache2/php.ini && \
-  sed -i 's/^;\?\(memory_limit =\).*$/\1 256M/' /etc/php5/apache2/php.ini && \
-  sed -i 's/^;\?\(post_max_size =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
+RUN sed -i 's/^;\?\(post_max_size =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
   sed -i 's/^;\?\(upload_max_filesize =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
   sed -i 's/^;\?\(output_buffering =\).*$/\1 Off/' /etc/php5/apache2/php.ini && \
   sed -i 's/^;\?\(default_charset =\).*$/\1 "UTF-8"/' /etc/php5/apache2/php.ini
 RUN php5enmod mcrypt
 
+RUN sed -i -e"s/html/owncloud/" /etc/apache2/sites-available/000-default.conf
+RUN sed -i -e"s/html/owncloud/" /etc/apache2/sites-available/default-ssl.conf
 RUN a2enmod ssl
 RUN a2ensite default-ssl
-
-ADD conf/owncloud /etc/apache2/sites-available/
-RUN rm -f /etc/apache2/sites-enabled/000*
-RUN ln -s /etc/apache2/sites-available/owncloud /etc/apache2/sites-enabled/
 
 # ------------------------------------------------------------------------------
 # Clean up APT when done.
