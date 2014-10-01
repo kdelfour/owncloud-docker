@@ -26,15 +26,30 @@ RUN update-rc.d sendmail defaults
 RUN curl -k https://download.owncloud.org/community/owncloud-7.0.2.tar.bz2 | tar jx -C /var/www/
 RUN chown -R www-data:www-data /var/www/owncloud
 RUN mkdir /var/www/owncloud/data
+RUN chmod -R 770 /var/www/owncloud/data
 
 # ------------------------------------------------------------------------------
 # Make some changes
-RUN sed -i 's/^;\?\(post_max_size =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
-  sed -i 's/^;\?\(upload_max_filesize =\).*$/\1 4G/' /etc/php5/apache2/php.ini && \
-  sed -i 's/^;\?\(output_buffering =\).*$/\1 Off/' /etc/php5/apache2/php.ini && \
-  sed -i 's/^;\?\(default_charset =\).*$/\1 "UTF-8"/' /etc/php5/apache2/php.ini
+RUN cp /etc/php5/cli/php.ini /etc/php5/php.ini
+RUN sed -i 's/^;\?\(post_max_size =\).*$/\1 4G/' /etc/php5/php.ini && \
+  sed -i 's/^;\?\(upload_max_filesize =\).*$/\1 4G/' /etc/php5/php.ini && \
+  sed -i 's/^;\?\(output_buffering =\).*$/\1 Off/' /etc/php5/php.ini && \
+  sed -i 's/^;\?\(default_charset =\).*$/\1 "UTF-8"/' /etc/php5/php.ini
+RUN sed -i -e "s:;\s*session.save_path\s*=\s*\"N;/path\":session.save_path = /tmp/sessions:g" /etc/php5/php.ini
+
+WORKDIR /etc/php5/cli
+RUN rm -f php.ini
+RUN ln -s ../php.ini php.ini
+
+WORKDIR /etc/php5/apache2
+RUN rm -f php.ini
+RUN ln -s ../php.ini php.ini
+
+RUN chown -R www-data:www-data /tmp/sessions
+
 RUN php5enmod mcrypt
 
+RUN sed -i 's/AllowOverride None/AllowOverride All/'  /etc/apache2/apache2.conf
 RUN sed -i -e"s/html/owncloud/" /etc/apache2/sites-available/000-default.conf
 RUN sed -i -e"s/html/owncloud/" /etc/apache2/sites-available/default-ssl.conf
 RUN a2enmod ssl
