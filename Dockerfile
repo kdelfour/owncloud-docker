@@ -45,6 +45,7 @@ WORKDIR /etc/php5/apache2
 RUN rm -f php.ini
 RUN ln -s ../php.ini php.ini
 
+RUN mkdir -p /tmp/sessions
 RUN chown -R www-data:www-data /tmp/sessions
 
 RUN php5enmod mcrypt
