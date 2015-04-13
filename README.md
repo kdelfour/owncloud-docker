@@ -10,17 +10,17 @@ This repository contains Dockerfile of Owncloud for Docker's automated build pub
 
 ## Install Docker.
 
-Download automated build from public Docker Hub Registry: docker pull kdelfour/owncloud-docker:8.0.2
+Download automated build from public Docker Hub Registry: docker pull kdelfour/owncloud-docker
 
 (alternatively, you can build an image from Dockerfile: docker build -t="kdelfour/owncloud-docker" github.com/kdelfour/owncloud-docker)
 
 ## Usage
 
-    docker run -it -d -p 80:80 -p 443:443 kdelfour/owncloud-docker:8.0.2
+    docker run -it -d -p 80:80 -p 443:443 kdelfour/owncloud-docker
     
 You can add a shared directory as a volume directory with the argument *-v /your-path/data/:/data/* like this :
 
-    docker run -it -d -p 80:80 -p 443:443 -v /your-path/data/:/data/ kdelfour/owncloud-docker:8.0.2
+    docker run -it -d -p 80:80 -p 443:443 -v /your-path/data/:/data/ kdelfour/owncloud-docker
 
 An embedded database is available.
     
@@ -33,7 +33,7 @@ Get the latest version from github
 
 Build it
 
-    sudo docker build --force-rm=true --tag="$USER/owncloud-docker:8.0.2" .
+    sudo docker build --force-rm=true --tag="$USER/owncloud-docker" .
     
 And run
 
