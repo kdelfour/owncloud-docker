@@ -25,8 +25,8 @@ RUN update-rc.d sendmail defaults
 # Install Owncloud
 RUN curl -k https://download.owncloud.org/community/owncloud-7.0.2.tar.bz2 | tar jx -C /var/www/
 RUN mkdir /var/www/owncloud/data
-RUN chmod -R 770 /var/www/owncloud/data
 RUN chown -R www-data:www-data /var/www/owncloud
+RUN chmod -R 770 /var/www/owncloud/data
 
 # ------------------------------------------------------------------------------
 # Make some changes
