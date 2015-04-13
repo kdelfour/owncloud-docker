@@ -17,7 +17,8 @@ RUN apt-get install -y bzip2 wget apache2 sendmail smbclient \
   libpaper-utils libpaper1 libpq5 libtiff5 libvpx1 libxpm4 lsof ntp \
   php-pear php-xml-parser php5 php5-cli php5-common php5-curl php5-gd \
   php5-imagick php5-intl php5-json php5-mcrypt php5-mysqlnd php5-pgsql \
-  php5-readline php5-sqlite poppler-data psmisc ttf-dejavu-core
+  php5-readline php5-sqlite poppler-data psmisc ttf-dejavu-core curl \
+  libc6 libcurl3 zlib1g
 
 RUN update-rc.d sendmail defaults
 
